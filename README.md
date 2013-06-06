@@ -7,7 +7,7 @@ Port of [Solving Every Sudoku Puzzle](http://norvig.com/sudoku.html) by Peter No
   - [sudo.py](http://norvig.com/sudo.py) in Python
   - [Solver.cs](https://github.com/PKRoma/LinqSudokuSolver/blob/master/Solver.cs) in C#
   
-View above solutions in [Python, Dart, C# side-by-side](https://gist.github.com/mythz/5723202). 
+View above solutions [side-by-side in Python, Dart, C#](https://gist.github.com/mythz/5723202). 
   
 ## Examples
 
