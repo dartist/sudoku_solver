@@ -39,12 +39,13 @@ String center(String s, int max, [String pad=" "]) {
   s = repeat(pad, (padLen/2).toInt()) + s;
   return s + repeat(pad, max-s.length);
 }
-
-some(Iterable seq) => seq.firstWhere((e) => e != null, orElse:() => null);
-all(Iterable seq) => seq.every((e) => e != null);
+ 
+Map dict(Iterable seq) => seq.fold({}, (map, kv) => map..putIfAbsent(kv[0], () => kv[1]));
+dynamic some(Iterable seq) => seq.firstWhere((e) => e != null, orElse:() => null);
+bool all(Iterable seq) => seq.every((e) => e != null);
 
 var rand = new Math.Random();
-shuffled(Iterable seq) => order(seq.toList(), on:(a) => rand.nextDouble());
+List shuffled(Iterable seq) => order(seq.toList(), on:(a) => rand.nextDouble());
 
 log(s){
   print(s);

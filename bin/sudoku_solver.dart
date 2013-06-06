@@ -9,18 +9,14 @@ List<List<String>> cross(String A, String B) =>
   A.split('').expand((a) => B.split('')
     .map((b) => a+b)).toList();  
 
-String digits   = '123456789';
-String rows     = 'ABCDEFGHI';
-String cols     = digits;
-
-List<List<String>> squares = cross(rows, cols);
+var digits   = '123456789';
+var rows     = 'ABCDEFGHI';
+var cols     = digits;
+var squares = cross(rows, cols);
 
 var unitlist = cols.split('').map((c) => cross(rows, c)).toList()
   ..addAll( rows.split('').map((r) => cross(r, cols)))
   ..addAll( ['ABC','DEF','GHI'].expand((rs) => ['123','456','789'].map((cs) => cross(rs, cs)) ));
-
-Map dict(Iterable seq) => 
-    seq.fold({}, (map, kv) => map..putIfAbsent(kv[0], () => kv[1]));
 
 var units = dict(squares.map((s) => 
     [s, unitlist.where((u) => u.contains(s)).toList()] ));
@@ -28,7 +24,8 @@ var units = dict(squares.map((s) =>
 var peers = dict(squares.map((s) => 
     [s, units[s].expand((u) => u).toSet()..removeAll([s])]));    
 
-parse_grid(grid){
+/// Parse a Grid
+Map parse_grid(String grid){
   var values = dict(squares.map((s) => [s, digits]));
   var gridValues = grid_values(grid);
   for (var s in gridValues.keys){
@@ -44,14 +41,15 @@ Map grid_values(String grid){
   return dict(zip(squares, chars));
 }
 
-assign(values, s, d){
+/// Constraint Propagation
+Map assign(Map values, String s, String d){
   var other_values = values[s].replaceAll(d, '');
   if (all(other_values.split('').map((d2) => eliminate(values, s, d2))))
     return values;
   return null;
 }
 
-eliminate(values, s, d){
+Map eliminate(Map values, String s, String d){
   if (!values[s].contains(d))
     return values;
   values[s] = values[s].replaceAll(d,'');
@@ -73,7 +71,8 @@ eliminate(values, s, d){
     return values;
 }
 
-display(values){
+/// Display as 2-D grid
+void display(Map values){
   var width = 1 + squares.map((s) => values[s].length).reduce(Math.max);
   var line = repeat('+' + repeat('-', width*3), 3).substring(1);  
   rows.split('').forEach((r){
@@ -85,7 +84,8 @@ display(values){
   print("");
 }
 
-solve(grid) => search(parse_grid(grid));
+/// Search 
+Map solve(String grid) => search(parse_grid(grid));
 
 Map search(Map values){
   if (values == null)
@@ -96,6 +96,9 @@ Map search(Map values){
   return some(values[s2].split('').map((d) => search(assign(new Map.from(values), s2, d))));
 }
 
+
+
+/// Test
 var grid1  = '003020600900305001001806400008102900700000008006708200002609500800203009005010300';
 var grid2  = '4.....8.5.3..........7......2.....6.....8.4......1.......6.3.7.5..2.....1.4......';
 var hard1  = '.....6....59.....82....8....45........3........6..3.54...325..6..................';
