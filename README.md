@@ -3,6 +3,7 @@ Sudoku Solver
 
 Port of [Solving Every Sudoku Puzzle](http://norvig.com/sudoku.html) by Peter Norvig in [Dart](http://www.dartlang.org/).
 
+  - [sudoku_solver.dart](https://github.com/dartist/sudoku_solver/blob/master/bin/sudoku_solver.dart) in Dart
   - [sudo.py](http://norvig.com/sudo.py) in Python
   - [Solver.cs](https://github.com/PKRoma/LinqSudokuSolver/blob/master/Solver.cs) in C#
   
