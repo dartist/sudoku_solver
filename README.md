@@ -6,8 +6,10 @@ Port of [Solving Every Sudoku Puzzle](http://norvig.com/sudoku.html) by Peter No
   - [sudoku_solver.dart](https://github.com/dartist/sudoku_solver/blob/master/bin/sudoku_solver.dart) in Dart
   - [sudo.py](http://norvig.com/sudo.py) in Python
   - [Solver.cs](https://github.com/PKRoma/LinqSudokuSolver/blob/master/Solver.cs) in C#
+  - [sudoku.rb](https://gist.github.com/jonelf/914326) in Ruby
+  - [sudoku.coffee](https://gist.github.com/jonelf/927782) in CoffeeScript
   
-View above solutions [side-by-side in Python, Dart, C#](https://gist.github.com/mythz/5723202). 
+View above solutions [side-by-side in Python, Dart, C#, Ruby, CoffeeScript](https://gist.github.com/mythz/5723202). 
   
 ## Examples
 
