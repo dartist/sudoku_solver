@@ -52,13 +52,13 @@ log(s){
   return s;
 }
 
-double measureFor(Function f, int timeMinimum) {
+double measureFor(Function fn, int timeMinimum) {
   int iter = 0;
   Stopwatch watch = new Stopwatch();
   watch.start();
   int elapsed = 0;
   while (elapsed < timeMinimum) {
-    f();
+    fn();
     elapsed = watch.elapsedMilliseconds;
     iter++;
   }
