@@ -67,6 +67,40 @@ View above solutions [side-by-side in Python, Dart, C#, Ruby, CoffeeScript](http
     3 9 2 |8 6 7 |5 4 1 
     5 6 8 |1 4 9 |2 3 7 
 
+## Benchmarks
+
+Results from running [these stand-alone benchmarks](https://github.com/dartist/sudoku_solver/blob/master/benchmarks/) 
+on a new high-end 27" iMac on OSX. Results shown in Microseconds (µs):
+
+### Dart
+
+	localhost:benchmarks mythz$ dart sudoku.dart 
+	grid1(RunTime): 3962.3762376237623 us. (1x)
+	grid2(RunTime): 8432.773109243697 us.  (1x)
+	top95(RunTime): 1198500.0 us.          (1x)
+
+### Python
+
+	localhost:benchmarks mythz$ python sudoku.py 
+	grid1(RunTime): 4764 us.               (1.20x)
+	grid2(RunTime): 8650 us.               (1.03x)
+	top95(RunTime): 1637500 us.            (1.37x)
+
+### C# / .NET (in Paralells Windows 8 VM)
+
+	C:\Users\mythz\Documents\Visual Studio 2012\Projects\Sudoku\Sudoku\bin\Release>Sudoku.exe
+	grid1(RunTime): 5149.10025706941 us.   (1.30x)
+	grid2(RunTime): 9004.48430493274 us.   (1.07x)
+	top95(RunTime): 1640000 us.            (1.37x)
+
+### C# / Mono
+
+	localhost:benchmarks mythz$ dmcs -optimize sudoku.cs 
+	localhost:benchmarks mythz$ mono sudoku.exe 
+	grid1(RunTime): 14735.2941176471 us.   (3.72x)
+	grid2(RunTime): 26421.0526315789 us.   (3.13x)
+	top95(RunTime): 4774000 us.            (3.98x)
+
 
 ### Contributors
 

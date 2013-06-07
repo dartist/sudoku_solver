@@ -51,3 +51,43 @@ log(s){
   print(s);
   return s;
 }
+
+double measureFor(Function f, int timeMinimum) {
+  int iter = 0;
+  Stopwatch watch = new Stopwatch();
+  watch.start();
+  int elapsed = 0;
+  while (elapsed < timeMinimum) {
+    f();
+    elapsed = watch.elapsedMilliseconds;
+    iter++;
+  }
+  return 1000.0 * elapsed / iter;
+}
+
+// Measures the score for the benchmark and returns it.
+double measure(Function fn, {times: 10, runfor: 2000, Function setup, Function warmup, Function teardown}) {
+  if (setup != null)
+    setup();    
+
+  // Warmup for at least 100ms. Discard result.
+  if (warmup == null)
+    warmup = fn;
+  
+  measureFor(() { warmup(); }, 100);
+  
+  // Run the benchmark for at least 2000ms.
+  double result = measureFor(() { 
+    for (var i=0; i<times; i++) 
+      fn(); 
+    }, runfor);
+  
+  if (teardown != null)
+    teardown();
+  
+  return result;
+}
+
+void report(name, score) {
+  print("$name(RunTime): $score us.");
+}
