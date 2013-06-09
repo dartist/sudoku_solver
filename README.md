@@ -11,9 +11,7 @@ Port of [Solving Every Sudoku Puzzle](http://norvig.com/sudoku.html) by Peter No
   
 View above solutions [side-by-side in Python, Dart, C#, Ruby, CoffeeScript](https://gist.github.com/mythz/5723202). 
   
-## Examples
-
-### Easy 1 board
+## Example
 
 From Command line:
 
@@ -44,6 +42,13 @@ solveSudoku('.....6....59.....82....8....45........3........6..3.54...325..6....
 	5 6 8 |1 4 9 |2 3 7 
 	
 	solved: true, in 69ms
+
+## [Installing via Pub](http://pub.dartlang.org/packages/sudoku)	
+
+Add this to your package's pubspec.yaml file:
+
+	dependencies:
+	  sudoku: 0.1.1
 
 ## Benchmarks
 
