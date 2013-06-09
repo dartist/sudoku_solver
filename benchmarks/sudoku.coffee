@@ -86,14 +86,14 @@ grid_values = (sgrid) ->
   grid    
 
 assign = (values, s, d) ->
-  other_values = values[s].replace(d, '')
+  other_values = values[s].replace(new RegExp(d, 'g'), '')
   for d2 in other_values
     return false unless eliminate(values, s, d2)
   values
 
 eliminate = (values, s, d) ->
   return values unless values[s].indexOf(d) >= 0
-  values[s] = values[s].replace(d, '')
+  values[s] = values[s].replace new RegExp(d, 'g'), ''
 
   if values[s].length == 0
     return false
@@ -102,7 +102,7 @@ eliminate = (values, s, d) ->
     for s2 in peers[s]
       return false unless eliminate(values, s2, d2)
 
-  for u in units
+  for u in units[s]
     dplaces = (s for s in u when d in values[s])
     return values if dplaces.length == 0
     if dplaces.length == 1
@@ -121,22 +121,24 @@ display = (values) ->
       row = row.concat(if c in "369" then "|" else " ")
     console.log row
   console.log line
+  console.log ""
+
+orderOn = (seq, fn) ->
+  seq.sort (a,b) -> 
+    if fn(a) > fn(b) then 1 else -1
+  seq
+
+some = (seq) ->
+  for e in seq
+    return e if e
+  false
 
 search = (values) ->
   return false if !values
-  min = {pos: -1, length: 10}
-  max = {pos: -1, length: 1}
-  for own key, value of values
-    if value.length > max.length then max = {pos: key, length: value.length} 
-    if min.length > value.length > 1 then min= {pos: key, length: value.length}
-  return values if max.length==1 # Solved!
-  
-  sq = squares[min.pos]
-
-  for d in values[sq]
-    return true unless search(assign(copy(values), sq, values[sq][d]))
-  return false
-
+  if (squares.every (s) -> values[s].length == 1)
+    return values
+  s2 = (orderOn (s for s in squares when values[s].length > 1), (s) -> values[s].length)[0]
+  some values[s2].split('').map (d) -> search assign copy(values), s2, d
 
 grid1  = '003020600900305001001806400008102900700000008006708200002609500800203009005010300'
 grid2  = '4.....8.5.3..........7......2.....6.....8.4......1.......6.3.7.5..2.....1.4......'
@@ -239,8 +241,6 @@ top95 = """4.....8.5.3..........7......2.....6.....8.4......1.......6.3.7.5..2..
 3...8.......7....51..............36...2..4....7...........6.13..452...........8..""".split('\n');
 
 
-# display(search(parse_grid(puzzle)))
- 
 measureFor = (fn, timeMinimum) ->
   iter = 0
   start = new Date
@@ -273,11 +273,54 @@ measure = (fn, times = 10, runfor = 2000, setup, warmup, teardown) ->
 
 report = (name, score) ->
   console.log "#{name}(RunTime): #{score} us."
- 
+
+uniq = (seq) ->
+  ret = []
+  _uniq = {}
+  for e in seq
+    if !_uniq[e]
+      ret.push(e)
+      _uniq[e] = true
+  ret
+
+seqEq = (seq1, seq2) ->
+  return false unless seq1.length == seq2.length
+  for i in [0..seq1]
+       return false unless seq1.indexOf(seq[i]) >= 0
+  true
+
+solved = (values) ->
+  return false if values == null
+  unitsolved = (unit) -> seqEq(uniq(unit.map((s) -> values[s])), uniq(DIGITS.split('')))
+  for unit in unitlist
+    return false unless unitsolved(unit)
+  true
+
 benchmark = () ->
   report "grid1", measure (() -> search(parse_grid(grid1))), 1
   report "grid2", measure (() -> search(parse_grid(grid2))), 1
-  report "hard1", measure (() -> search(parse_grid(hard1))), 1
   report "top95", measure (() -> search(parse_grid(game)) for game in top95  ), 1
 
+solveGrid = (name, grid) ->
+  console.log "#{name}: #{grid}"
+  start = new Date
+  solution = search(parse_grid(grid))
+  elapsed = new Date - start
+  display(solution)
+  console.log "solved: #{solved(solution)}, in #{elapsed}ms\n"
+
+displayAll = () ->
+  solveGrid "grid1", grid1
+  solveGrid "grid2", grid2
+
+  top95.forEach (game, i) ->
+    solveGrid "top #{i+1}/95", game
+
+
+#### main() ####
+
 benchmark()
+#console.log ""
+#displayAll()
+#solveGrid "hard1", hard1
+

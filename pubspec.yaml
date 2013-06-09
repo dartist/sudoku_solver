@@ -1,4 +1,8 @@
-name: sudoku_solver
-description: A sample command-line application
+name: sudoku
+version: 0.1.0
+author: Demis Bellot
+description: A Sudoku solver for Dart
+homepage: https://github.com/dartist/sudoku_solver
+
 #dependencies:
 #  unittest: any

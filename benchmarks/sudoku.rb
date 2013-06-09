@@ -155,12 +155,14 @@ def search(values)
 end # search def
 
 
-grid1  = '003020600900305001001806400008102900700000008006708200002609500800203009005010300'
-grid2  = '4.....8.5.3..........7......2.....6.....8.4......1.......6.3.7.5..2.....1.4......'
-hard1  = '.....6....59.....82....8....45........3........6..3.54...325..6..................'
+### define set of test games
 
-# define set of test games
-top95 = %w{
+require 'benchmark'
+
+GRID1  = '003020600900305001001806400008102900700000008006708200002609500800203009005010300'
+GRID2  = '4.....8.5.3..........7......2.....6.....8.4......1.......6.3.7.5..2.....1.4......'
+HARD1  = '.....6....59.....82....8....45........3........6..3.54...325..6..................'
+TOP95 = %w{
 4.....8.5.3..........7......2.....6.....8.4......1.......6.3.7.5..2.....1.4......
 52...6.........7.13...........4..8..6......5...........418.........3..2...87.....
 6.....8.3.4.7.................5.4.7.3..2.....1.6.......2.....5.....8.6......1....
@@ -259,33 +261,35 @@ top95 = %w{
 }
 
 def measureFor(fn, timeMinimum) 
-  int iter = 0
-  int elapsed = 0
-  while (elapsed < timeMinimum) 
-  	time = Benchmark.realtime do
-	  fn()
-	end
-    elapsed = time * 1000
-    iter++
+  iter = 0
+  elapsed = 0
+  start = Time.now
+  while elapsed < timeMinimum do 
+    fn.call()
+    elapsed = (Time.now - start) * 1000
+    iter += 1
   end
   return 1000.0 * elapsed / iter
 end
 
-def measure(fn, times=10, runfor=2000, setup=nil, warmup=nil, teardown=nil) 
+def measure(fn, times = 10, runfor = 2000, setup=nil, warmup=nil, teardown=nil) 
   if setup != nil
-    setup()    
+    setup.call()    
+  end
 
   # Warmup for at least 100ms. Discard result.
-  if (warmup == nil)
+  if warmup == nil
     warmup = fn
+  end
   
-  measureFor(lambda { warmup() }, 100)
+  measureFor(lambda { warmup.call() }, 100)
   
   # Run the benchmark for at least 2000ms.
-  result = measureFor(lambda { (0..times).each do |i| fn() end }, runfor)
+  result = measureFor(lambda { (0..times).each { |i| fn.call() } }, runfor)
   
-  if (teardown != null)
-    teardown()
+  if teardown != nil
+    teardown.call()
+  end
   
   return result
 end
@@ -294,9 +298,40 @@ def report(name, score)
   puts "#{name}(RunTime): #{score} us."
 end
 
+def log(o)
+  puts o
+  return o
+end
+
+def solved(values)
+  unitsolved = lambda { |unit| ((unit.map { |s| (values[s]) }.uniq - DIGITS.chars.uniq {|c| c}).length) == 0 }
+  return values != nil && @unitlist.select{ |unit| unitsolved.call((unit)) }.all?   
+end
+
+def solveGrid(name, grid)
+  solution = nil
+  puts "#{name}: #{grid}"
+  time = Benchmark.realtime do
+  	solution = search(parse_grid(grid))
+  end
+  display(solution)
+  puts "solved: #{solved(solution)}, in #{time * 1000}ms\n"
+end
+
+def displayAll()
+  solveGrid("grid1", GRID1)
+  solveGrid("grid2", GRID2)
+  i = 0
+  TOP95.each { |game| solveGrid("top #{i += 1}/95", game) }
+end
+
 def benchmark()
-  report("grid1", measure(lambda { search(parse_grid(grid1)) }, :times => 1))
-  report("grid2", measure(lambda { search(parse_grid(grid2)) }, :times => 1))
-#  report("hard1", measure(lambda { search(parse_grid(hard1)) }, :times => 1))
-  report("top95", measure(lambda { top95.each { |game| search(parse_grid(game)) } }, :times => 1))
-end 
+  report("grid1", measure(lambda { search(parse_grid(GRID1)) }, 1))
+  report("grid2", measure(lambda { search(parse_grid(GRID2)) }, 1))
+  report("top95", measure(lambda { TOP95.each { |game| search(parse_grid(game)) } }, 1))
+end
+
+benchmark()
+#puts ""
+#displayAll()
+#solveGrid("hard1", HARD1)

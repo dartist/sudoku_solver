@@ -106,7 +106,7 @@ def display(values):
         print ''.join(values[r+c].center(width)+('|' if c in '36' else '')
                       for c in cols)
         if r in 'CF': print line
-    print
+    print ''  
 
 ################ Search ################
 
@@ -179,6 +179,7 @@ def random_puzzle(N=17):
         if not assign(values, s, random.choice(values[s])):
             return random_puzzle(N) ## Give up and make a new puzzle
     return ''.join(values[s] if len(values[s])==1 else '.' for s in squares)
+
 
 grid1  = '003020600900305001001806400008102900700000008006708200002609500800203009005010300'
 grid2  = '4.....8.5.3..........7......2.....6.....8.4......1.......6.3.7.5..2.....1.4......'
@@ -307,28 +308,30 @@ def measure(fn, times=10, runfor=2000, setup=None, warmup=None, teardown=None):
 def report(name, score):
     print '%s(RunTime): %d us.' % (name, score)
 
+def solveGrid(name, grid):
+    print "%s: %s" % (name, grid)
+    start = time.clock()
+    solution = search(parse_grid(grid))
+    display(solution)
+    print "solved: %s, in %.2f ms\n" % (solved(solution), (time.clock() - start) * 1000)
+
+def displayAll():
+    solveGrid("grid1", grid1)
+    solveGrid("grid2", grid2)
+    i=0
+    for game in top95:
+        i += 1
+        solveGrid("top %d/95" % i, game)
+    
 def benchmark():
     report("grid1", measure(lambda : search(parse_grid(grid1)), times=1))
     report("grid2", measure(lambda : search(parse_grid(grid2)), times=1))
-#    report("hard1", measure(lambda : search(parse_grid(hard1)), times=1))
     report("top95", measure(lambda : [search(parse_grid(game)) for game in top95], times=1))
 
-def displayAll():
-    print "grid1: %s" % grid1
-    display(search(parse_grid(grid1)))
-
-    print "grid2: %s" % grid2
-    display(search(parse_grid(grid2)))
-
-#    print "hard1: %s" % hard1
-#    display(search(parse_grid(hard1)))
-
-    for game in top95:
-        print game
-        display(search(parse_grid(game)))
 
 if __name__ == '__main__':
     benchmark()
-    print ''
-    # displayAll()
+#    print ''
+#    displayAll()
+#    solveGrid("hard1", hard1)
 

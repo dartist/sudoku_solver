@@ -152,13 +152,13 @@ Map eliminate(Map values, String s, String d){
   }
   for (var u in units[s]){
     var dplaces = u.where((s) => values[s].contains(d)); 
-      if (dplaces.length == 0)
+    if (dplaces.length == 0)
+      return null;
+    else if (dplaces.length == 1)
+      if (assign(values, dplaces.elementAt(0), d) == null)
         return null;
-      else if (dplaces.length == 1)
-        if (assign(values, dplaces.elementAt(0), d) == null)
-          return null;
-    }
-    return values;
+  }
+  return values;
 }
 
 /// Display as 2-D grid
@@ -190,42 +190,6 @@ Map search(Map values){
 var grid1  = '003020600900305001001806400008102900700000008006708200002609500800203009005010300';
 var grid2  = '4.....8.5.3..........7......2.....6.....8.4......1.......6.3.7.5..2.....1.4......';
 var hard1  = '.....6....59.....82....8....45........3........6..3.54...325..6..................';
-
-void main(){
-  benchmark();
-  print("");
-  //displayAll();
-}
-
-solved(values){
-  unitsolved(unit) => unit.map((s) => values[s]).toSet().difference(digits.split('').toSet()).length == 0;
-  return values != null && all(unitlist.map((unit) => unitsolved(unit)));
-}
-
-displayAll(){
-  print("grid1: $grid1");
-  display(search(parse_grid(grid1)));
-
-  print("grid2: $grid2");
-  display(search(parse_grid(grid2)));
-
-//  print("hard1: $hard1");
-//  display(search(parse_grid(hard1)));
-  
-  print("top95:");
-  top95.forEach((game){
-    print(game);
-    display(search(parse_grid(game)));
-  });  
-}
-
-benchmark(){
-  report("grid1", measure((){ search(parse_grid(grid1)); }, times:1));
-  report("grid2", measure((){ search(parse_grid(grid2)); }, times:1));
-//  report("hard1", measure((){ search(parse_grid(hard1)); }, times:1));
-  report("top95", measure((){ top95.forEach((game) => search(parse_grid(game)) ); }, times:1));
-}
-
 var top95 = """4.....8.5.3..........7......2.....6.....8.4......1.......6.3.7.5..2.....1.4......
 52...6.........7.13...........4..8..6......5...........418.........3..2...87.....
 6.....8.3.4.7.................5.4.7.3..2.....1.6.......2.....5.....8.6......1....
@@ -321,3 +285,40 @@ var top95 = """4.....8.5.3..........7......2.....6.....8.4......1.......6.3.7.5.
 .5..9....1.....6.....3.8.....8.4...9514.......3....2..........4.8...6..77..15..6.
 .....2.......7...17..3...9.8..7......2.89.6...13..6....9..5.824.....891..........
 3...8.......7....51..............36...2..4....7...........6.13..452...........8..""".split('\n');
+
+solved(values){
+  unitsolved(unit) => unit.map((s) => values[s]).toSet().difference(digits.split('').toSet()).length == 0;
+  return values != null && all(unitlist.map((unit) => unitsolved(unit)));
+}
+
+solveGrid(name, grid) {
+  print("$name: $grid");
+  var watch = new Stopwatch();
+  watch.start();
+  var solution = search(parse_grid(grid));
+  var elapsed = watch.elapsedMilliseconds;
+  display(solution);
+  print("solved: ${solved(solution)}, in ${elapsed}ms\n");
+}
+
+displayAll(){
+  solveGrid("grid1", grid1);
+  solveGrid("grid2", grid2);
+
+  var i=0;
+  top95.forEach((game) =>
+    solveGrid("top ${++i}/95", game));
+}
+
+benchmark(){
+  report("grid1", measure((){ search(parse_grid(grid1)); }, times:1));
+  report("grid2", measure((){ search(parse_grid(grid2)); }, times:1));
+  report("top95", measure((){ top95.forEach((game) => search(parse_grid(game)) ); }, times:1));
+}
+
+void main(){
+  benchmark();
+//  print("");
+//  displayAll();
+//  solveGrid("hard1", hard1);
+}
