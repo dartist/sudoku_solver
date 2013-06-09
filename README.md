@@ -3,11 +3,11 @@ Sudoku Solver
 
 Port of [Solving Every Sudoku Puzzle](http://norvig.com/sudoku.html) by Peter Norvig in [Dart](http://www.dartlang.org/).
 
-  - [sudoku_solver.dart](https://github.com/dartist/sudoku_solver/blob/master/bin/sudoku_solver.dart) in Dart
-  - [sudo.py](http://norvig.com/sudo.py) in Python
-  - [Solver.cs](https://github.com/PKRoma/LinqSudokuSolver/blob/master/Solver.cs) in C#
-  - [sudoku.rb](https://gist.github.com/jonelf/914326) in Ruby
-  - [sudoku.coffee](https://gist.github.com/jonelf/927782) in CoffeeScript
+  - [sudoku.dart](https://github.com/dartist/sudoku_solver/blob/master/benchmarks/sudoku.dart) in Dart
+  - [sudoku.py](https://github.com/dartist/sudoku_solver/blob/master/benchmarks/sudoku.py) in Python
+  - [sudoku.cs](https://github.com/dartist/sudoku_solver/blob/master/benchmarks/sudoku.cs) in C#
+  - [sudoku.rb](https://github.com/dartist/sudoku_solver/blob/master/benchmarks/sudoku.rb) in Ruby
+  - [sudoku.coffee](https://github.com/dartist/sudoku_solver/blob/master/benchmarks/sudoku.coffee) in CoffeeScript
   
 View above solutions [side-by-side in Python, Dart, C#, Ruby, CoffeeScript](https://gist.github.com/mythz/5723202). 
   
