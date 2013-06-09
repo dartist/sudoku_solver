@@ -60,16 +60,6 @@ for s in squares
     peers[s] = peers[s].concat(ns) if s in ns
   peers[s] = uniq_and_remove(peers[s],s)
 
-# "Tests"
-# console.log squares.length
-# console.log nine_squares
-# console.log nine_squares.length
-# console.log unitlist
-# console.log unitlist.length
-# console.log units
-# console.log units["C2"]
-# console.log peers["C2"]
-
 parse_grid = (grid) ->
   # To start, every square can be any digit; then assign values from the grid.
   values = {}
