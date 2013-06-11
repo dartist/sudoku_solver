@@ -1,5 +1,5 @@
 name: sudoku
-version: 0.1.1
+version: 0.1.2
 author: Demis Bellot<demis.bellot@gmail.com>
 description: A Sudoku solver for Dart
 homepage: https://github.com/dartist/sudoku_solver
