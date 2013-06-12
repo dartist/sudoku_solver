@@ -1,19 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="aad741d8-d298-46eb-8345-6e2e8ec92056" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/benchmarks/sudoku.exe" afterPath="$PROJECT_DIR$/benchmarks/sudoku.exe" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/benchmarks/sudoku.coffee" afterPath="$PROJECT_DIR$/benchmarks/sudoku.coffee" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/benchmarks/sudoku.cs" afterPath="$PROJECT_DIR$/benchmarks/sudoku.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/benchmarks/sudoku.dart" afterPath="$PROJECT_DIR$/benchmarks/sudoku.dart" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/benchmarks/sudoku.py" afterPath="$PROJECT_DIR$/benchmarks/sudoku.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/benchmarks/sudoku.rb" afterPath="$PROJECT_DIR$/benchmarks/sudoku.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/sudoku_solver.dart" afterPath="$PROJECT_DIR$/bin/sudoku_solver.dart" />
-    </list>
+    <list default="true" id="aad741d8-d298-46eb-8345-6e2e8ec92056" name="Default" comment="" />
     <ignored path="sudoku_solver.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="aad741d8-d298-46eb-8345-6e2e8ec92056" time="1370695416278" ignored="false" />
+    <file path="/Dummy.txt" changelist="aad741d8-d298-46eb-8345-6e2e8ec92056" time="1371008652482" ignored="false" />
     <file path="/sudoku.coffee" changelist="aad741d8-d298-46eb-8345-6e2e8ec92056" time="1370700484254" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -34,19 +25,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="sudoku_solver.dart" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/bin/sudoku_solver.dart">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="33" column="9" selection-start="1025" selection-end="1025" vertical-scroll-proportion="-0.6">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="sudoku.coffee" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/benchmarks/sudoku.coffee">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="304" column="16" selection-start="13176" selection-end="13176" vertical-scroll-proportion="0.45637584">
+            <state line="295" column="16" selection-start="12983" selection-end="12983" vertical-scroll-proportion="0.69982547">
               <folding />
             </state>
           </provider>
@@ -75,7 +57,6 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="1534" />
     <option name="y" value="22" />
     <option name="width" value="1023" />
     <option name="height" value="1330" />
@@ -160,12 +141,13 @@
   <component name="PropertiesComponent">
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="options.lastSelected" value="preferences.sourceCode" />
     <property name="recentsLimit" value="5" />
+    <property name="options.lastSelected" value="preferences.sourceCode" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/servicestack.net" />
     <property name="restartRequiresConfirmation" value="true" />
     <property name="FullScreen" value="false" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
   </component>
   <component name="RunManager" selected="Node.js.sudoku.coffee">
     <configuration default="false" name="sudoku.coffee" type="NodeJSConfigurationType" factoryName="Node.js" temporary="true" path-to-node="/usr/local/bin/node" path-to-js-file="sudoku.coffee" working-dir="$PROJECT_DIR$/benchmarks" coffeescript-path="/usr/local/bin/coffee" coffeescript-run="true">
@@ -203,13 +185,13 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1534" y="22" width="1023" height="1330" extended-state="0" />
-    <editor active="true" />
+    <frame x="0" y="22" width="1023" height="1330" extended-state="0" />
+    <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25" sideWeight="0.6702479" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25" sideWeight="0.6702479" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -285,23 +267,16 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/bin/sudoku_solver.dart">
+    <entry file="file://$PROJECT_DIR$/benchmarks/sudoku.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bin/sudoku_solver.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="33" column="9" selection-start="1025" selection-end="1025" vertical-scroll-proportion="-0.6">
+        <state line="304" column="16" selection-start="13176" selection-end="13176" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/benchmarks/sudoku.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="304" column="16" selection-start="13176" selection-end="13176" vertical-scroll-proportion="0.45637584">
+        <state line="295" column="16" selection-start="12983" selection-end="12983" vertical-scroll-proportion="0.69982547">
           <folding />
         </state>
       </provider>
