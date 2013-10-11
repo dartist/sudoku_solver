@@ -20,15 +20,17 @@ From Command line:
 As a Library:
 
 ```dart
-import '../lib/sudoku.dart';
+import 'package:sudoku/sudoku.dart';
 
-solveSudoku('.....6....59.....82....8....45........3........6..3.54...325..6..................');
+main() {
+  String board = '.....6....59.....82....8....45........3........6..3.54...325..6..................';
+  Map result = solve(board);
+  display(result);
+}
 ```
 
 #### Output 
 
-	Board: .....6....59.....82....8....45........3........6..3.54...325..6..................
-	
 	4 8 7 |2 5 6 |3 1 9 
 	6 5 9 |7 3 1 |4 2 8 
 	2 3 1 |4 9 8 |6 7 5 
@@ -39,16 +41,14 @@ solveSudoku('.....6....59.....82....8....45........3........6..3.54...325..6....
 	------+------+------
 	1 7 4 |3 2 5 |8 9 6 
 	3 9 2 |8 6 7 |5 4 1 
-	5 6 8 |1 4 9 |2 3 7 
-	
-	solved: true, in 69ms
+	5 6 8 |1 4 9 |2 3 7
 
 ## [Installing via Pub](http://pub.dartlang.org/packages/sudoku)	
 
 Add this to your package's pubspec.yaml file:
 
 	dependencies:
-	  sudoku: 0.1.1
+	  sudoku: 0.1.3
 
 ## Benchmarks
 
