@@ -103,79 +103,27 @@ final List<String> top95 = """4.....8.5.3..........7......2.....6.....8.4......1
 .....2.......7...17..3...9.8..7......2.89.6...13..6....9..5.824.....891..........
 3...8.......7....51..............36...2..4....7...........6.13..452...........8..""".split('\n');
 
-void report(name, score) {
-  print("$name(RunTime): $score us.");
-}
-
-double measureFor(Function f, int timeMinimum) {
-  int iter = 0;
-  Stopwatch watch = new Stopwatch();
-  watch.start();
-  int elapsed = 0;
-  while (elapsed < timeMinimum) {
-    f();
-    elapsed = watch.elapsedMilliseconds;
-    iter++;
+class SudokuBenchmark extends BenchmarkBase {
+  SudokuBenchmark() : super("Sudoku");
+  
+  // The benchmark code.
+  void run() {
+    search(parse_grid(grid1));
+    search(parse_grid(grid2));
+    top95.forEach((game) => search(parse_grid(game)));
   }
-  return 1000.0 * elapsed / iter;
-}
 
-// Measures the score for the benchmark and returns it.
-double measure(Function fn, {times: 10, runfor: 2000, Function setup, Function warmup, Function teardown}) {
-  if (setup != null)
-    setup();    
+  // Not measured setup code executed prior to the benchmark runs.
+  void setup() { }
 
-  // Warmup for at least 100ms. Discard result.
-  if (warmup == null)
-    warmup = fn;
-  
-  measureFor(() { warmup(); }, 100);
-  
-  // Run the benchmark for at least 2000ms.
-  double result = measureFor(() { 
-    for (var i=0; i<times; i++) 
-      fn(); 
-    }, runfor);
-  
-  if (teardown != null)
-    teardown();
-  
-  return result;
-}
-
-solved(values){
-  unitsolved(unit) => unit.map((s) => values[s]).toSet().difference(digits.split('').toSet()).length == 0;
-  return values != null && all(unitlist.map((unit) => unitsolved(unit)));
-}
-
-solveGrid(name, grid) {
-  print("$name: $grid");
-  var watch = new Stopwatch();
-  watch.start();
-  var solution = search(parse_grid(grid));
-  var elapsed = watch.elapsedMilliseconds;
-  display(solution);
-  print("solved: ${solved(solution)}, in ${elapsed}ms\n");
-}
-
-displayAll(){
-  solveGrid("grid1", grid1);
-  solveGrid("grid2", grid2);
-
-  var i=0;
-  top95.forEach((game) =>
-    solveGrid("top ${++i}/95", game));
+  // Not measures teardown code executed after the benchark runs.
+  void teardown() { }
 }
 
 benchmark(){
-  report("grid1", measure((){ search(parse_grid(grid1)); }, times:1));
-  report("grid2", measure((){ search(parse_grid(grid2)); }, times:1));
-  report("top95", measure((){ top95.forEach((game) => search(parse_grid(game)) ); }, times:1));
+
 }
 
 void main(){
-  benchmark();
-//  print("");
-//  displayAll();
-//  solveGrid("hard1", hard1);
+  new SudokuBenchmark().report();
 }
