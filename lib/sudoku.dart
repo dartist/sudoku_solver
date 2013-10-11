@@ -1,4 +1,4 @@
-library sudoku_solver; 
+library sudoku; 
 
 import "dart:math" as Math;
 

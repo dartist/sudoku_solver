@@ -1,4 +1,4 @@
-part of sudoku_solver;
+part of sudoku;
 
 wrap(value, fn(x)) => fn(value);
 
