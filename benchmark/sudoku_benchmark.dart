@@ -1,196 +1,13 @@
-library sudoku_solver; 
+library sudoku_benchmark; 
 
-import "dart:collection";
-import "dart:math" as Math;
-
-wrap(value, fn(x)) => fn(value);
-
-order(List seq, {Comparator by, List<Comparator> byAll, on(x), List<Function> onAll}) =>
-  by != null ? 
-    (seq..sort(by)) 
-  : byAll != null ?
-    (seq..sort((a,b) => byAll
-      .firstWhere((compare) => compare(a,b) != 0, orElse:() => (x,y) => 0)(a,b)))
-  : on != null ? 
-    (seq..sort((a,b) => on(a).compareTo(on(b)))) 
-  : onAll != null ?
-    (seq..sort((a,b) =>
-      wrap(onAll.firstWhere((_on) => _on(a).compareTo(_on(b)) != 0, orElse:() => (x) => 0),
-        (_on) => _on(a).compareTo(_on(b)) 
-    ))) 
-  : (seq..sort()); 
-
-List<List> zip(a, b) {
-  var z = [];
-  var n = Math.min(a.length, b.length);
-  for (var i=0; i<n; i++)
-    z.add([a.elementAt(i), b.elementAt(i)]);
-  return z;
-}
-
-String repeat(String s, int n){
-  var sb = new StringBuffer();
-  for (var i=0; i<n; i++)
-    sb.write(s);
-  return sb.toString();
-}
-
-String center(String s, int max, [String pad=" "]) {
-  var padLen = max - s.length;
-  if (padLen <= 0) return s;
-  
-  s = repeat(pad, (padLen/2).toInt()) + s;
-  return s + repeat(pad, max-s.length);
-}
- 
-Map dict(Iterable seq) => seq.fold({}, (map, kv) => map..putIfAbsent(kv[0], () => kv[1]));
-dynamic some(Iterable seq) => seq.firstWhere((e) => e != null, orElse:() => null);
-bool all(Iterable seq) => seq.every((e) => e != null);
-
-var rand = new Math.Random();
-List shuffled(Iterable seq) => order(seq.toList(), on:(a) => rand.nextDouble());
-
-log(s){
-  print(s);
-  return s;
-}
-
-double measureFor(Function f, int timeMinimum) {
-  int iter = 0;
-  Stopwatch watch = new Stopwatch();
-  watch.start();
-  int elapsed = 0;
-  while (elapsed < timeMinimum) {
-    f();
-    elapsed = watch.elapsedMilliseconds;
-    iter++;
-  }
-  return 1000.0 * elapsed / iter;
-}
-
-// Measures the score for the benchmark and returns it.
-double measure(Function fn, {times: 10, runfor: 2000, Function setup, Function warmup, Function teardown}) {
-  if (setup != null)
-    setup();    
-
-  // Warmup for at least 100ms. Discard result.
-  if (warmup == null)
-    warmup = fn;
-  
-  measureFor(() { warmup(); }, 100);
-  
-  // Run the benchmark for at least 2000ms.
-  double result = measureFor(() { 
-    for (var i=0; i<times; i++) 
-      fn(); 
-    }, runfor);
-  
-  if (teardown != null)
-    teardown();
-  
-  return result;
-}
-
-void report(name, score) {
-  print("$name(RunTime): $score us.");
-}
-
-List<List<String>> cross(String A, String B) =>
-  A.split('').expand((a) => B.split('')
-    .map((b) => a+b)).toList();  
-
-var digits   = '123456789';
-var rows     = 'ABCDEFGHI';
-var cols     = digits;
-var squares = cross(rows, cols);
-
-var unitlist = cols.split('').map((c) => cross(rows, c)).toList()
-  ..addAll( rows.split('').map((r) => cross(r, cols)))
-  ..addAll( ['ABC','DEF','GHI'].expand((rs) => ['123','456','789'].map((cs) => cross(rs, cs)) ));
-
-var units = dict(squares.map((s) => 
-    [s, unitlist.where((u) => u.contains(s)).toList()] ));
-
-var peers = dict(squares.map((s) => 
-    [s, units[s].expand((u) => u).toSet()..removeAll([s])]));    
-
-/// Parse a Grid
-Map parse_grid(String grid){
-  var values = dict(squares.map((s) => [s, digits]));
-  var gridValues = grid_values(grid);
-  for (var s in gridValues.keys){
-    var d = gridValues[s];
-    if (digits.contains(d) && assign(values, s, d) == null)
-      return null;
-  }
-  return values;
-}
-
-Map grid_values(String grid){
-  var chars = grid.split('').where((c) => digits.contains(c) || '0.'.contains(c));
-  return dict(zip(squares, chars));
-}
-
-/// Constraint Propagation
-Map assign(Map values, String s, String d){
-  var other_values = values[s].replaceAll(d, '');
-  if (all(other_values.split('').map((d2) => eliminate(values, s, d2))))
-    return values;
-  return null;
-}
-
-Map eliminate(Map values, String s, String d){
-  if (!values[s].contains(d))
-    return values;
-  values[s] = values[s].replaceAll(d,'');
-  if (values[s].length == 0)
-    return null;
-  else if (values[s].length == 1){
-    var d2 = values[s];
-    if (!all(peers[s].map((s2) => eliminate(values, s2, d2))))
-      return null;
-  }
-  for (var u in units[s]){
-    var dplaces = u.where((s) => values[s].contains(d)); 
-    if (dplaces.length == 0)
-      return null;
-    else if (dplaces.length == 1)
-      if (assign(values, dplaces.elementAt(0), d) == null)
-        return null;
-  }
-  return values;
-}
-
-/// Display as 2-D grid
-void display(Map values){
-  var width = 1 + squares.map((s) => values[s].length).reduce(Math.max);
-  var line = repeat('+' + repeat('-', width*3), 3).substring(1);  
-  rows.split('').forEach((r){
-    print(cols.split('').map((c) => center(values[r+c], width) + ('36'.contains(c) ? '|' : '')).toList()
-      .join(''));
-    if ('CF'.contains(r))
-      print(line);
-  });
-  print("");
-}
-
-/// Search 
-Map solve(String grid) => search(parse_grid(grid));
-
-Map search(Map values){
-  if (values == null)
-    return null;
-  if (squares.every((s) => values[s].length == 1))
-    return values;
-  var s2 = order(squares.where((s) => values[s].length > 1).toList(), on:(s) => values[s].length).first;
-  return some(values[s2].split('').map((d) => search(assign(new Map.from(values), s2, d))));
-}
+import 'package:benchmark_harness/benchmark_harness.dart';
+import 'package:sudoku/sudoku.dart';
 
 /// Test
-var grid1  = '003020600900305001001806400008102900700000008006708200002609500800203009005010300';
-var grid2  = '4.....8.5.3..........7......2.....6.....8.4......1.......6.3.7.5..2.....1.4......';
-var hard1  = '.....6....59.....82....8....45........3........6..3.54...325..6..................';
-var top95 = """4.....8.5.3..........7......2.....6.....8.4......1.......6.3.7.5..2.....1.4......
+const String grid1  = '003020600900305001001806400008102900700000008006708200002609500800203009005010300';
+const String grid2  = '4.....8.5.3..........7......2.....6.....8.4......1.......6.3.7.5..2.....1.4......';
+const String hard1  = '.....6....59.....82....8....45........3........6..3.54...325..6..................';
+final List<String> top95 = """4.....8.5.3..........7......2.....6.....8.4......1.......6.3.7.5..2.....1.4......
 52...6.........7.13...........4..8..6......5...........418.........3..2...87.....
 6.....8.3.4.7.................5.4.7.3..2.....1.6.......2.....5.....8.6......1....
 48.3............71.2.......7.5....6....2..8.............1.76...3.....4......5....
@@ -286,39 +103,27 @@ var top95 = """4.....8.5.3..........7......2.....6.....8.4......1.......6.3.7.5.
 .....2.......7...17..3...9.8..7......2.89.6...13..6....9..5.824.....891..........
 3...8.......7....51..............36...2..4....7...........6.13..452...........8..""".split('\n');
 
-solved(values){
-  unitsolved(unit) => unit.map((s) => values[s]).toSet().difference(digits.split('').toSet()).length == 0;
-  return values != null && all(unitlist.map((unit) => unitsolved(unit)));
-}
+class SudokuBenchmark extends BenchmarkBase {
+  SudokuBenchmark() : super("Sudoku");
+  
+  // The benchmark code.
+  void run() {
+    search(parse_grid(grid1));
+    search(parse_grid(grid2));
+    top95.forEach((game) => search(parse_grid(game)));
+  }
 
-solveGrid(name, grid) {
-  print("$name: $grid");
-  var watch = new Stopwatch();
-  watch.start();
-  var solution = search(parse_grid(grid));
-  var elapsed = watch.elapsedMilliseconds;
-  display(solution);
-  print("solved: ${solved(solution)}, in ${elapsed}ms\n");
-}
+  // Not measured setup code executed prior to the benchmark runs.
+  void setup() { }
 
-displayAll(){
-  solveGrid("grid1", grid1);
-  solveGrid("grid2", grid2);
-
-  var i=0;
-  top95.forEach((game) =>
-    solveGrid("top ${++i}/95", game));
+  // Not measures teardown code executed after the benchark runs.
+  void teardown() { }
 }
 
 benchmark(){
-  report("grid1", measure((){ search(parse_grid(grid1)); }, times:1));
-  report("grid2", measure((){ search(parse_grid(grid2)); }, times:1));
-  report("top95", measure((){ top95.forEach((game) => search(parse_grid(game)) ); }, times:1));
+
 }
 
 void main(){
-  benchmark();
-//  print("");
-//  displayAll();
-//  solveGrid("hard1", hard1);
+  new SudokuBenchmark().report();
 }
