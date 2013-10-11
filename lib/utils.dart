@@ -21,7 +21,7 @@ List<List> zip(a, b) {
   var n = Math.min(a.length, b.length);
   var z = new List(n);
   for (var i=0; i<n; i++)
-    z.add([a.elementAt(i), b.elementAt(i)]);
+    z[i] = [a.elementAt(i), b.elementAt(i)];
   return z;
 }
 
@@ -44,7 +44,7 @@ Map dict(Iterable seq) => seq.fold({}, (map, kv) => map..putIfAbsent(kv[0], () =
 dynamic some(Iterable seq) => seq.firstWhere((e) => e != null, orElse:() => null);
 bool all(Iterable seq) => seq.every((e) => e != null);
 
-var rand = new Math.Random();
+Math.Random rand = new Math.Random();
 List shuffled(Iterable seq) => order(seq.toList(), on:(a) => rand.nextDouble());
 
 log(s) {

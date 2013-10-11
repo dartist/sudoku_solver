@@ -5,22 +5,21 @@ import "dart:math" as Math;
 part 'utils.dart';
 
 List<List<String>> cross(String A, String B) =>
-  A.split('').expand((a) => B.split('')
-    .map((b) => a+b)).toList();  
+  A.split('').expand((a) => B.split('').map((b) => a+b)).toList();  
 
-var digits   = '123456789';
-var rows     = 'ABCDEFGHI';
-var cols     = digits;
-var squares = cross(rows, cols);
+const String digits   = '123456789';
+const String rows     = 'ABCDEFGHI';
+const String cols     = digits;
+final List<List<String>> squares = cross(rows, cols);
 
-var unitlist = cols.split('').map((c) => cross(rows, c)).toList()
+final List unitlist = cols.split('').map((c) => cross(rows, c)).toList()
   ..addAll( rows.split('').map((r) => cross(r, cols)))
   ..addAll( ['ABC','DEF','GHI'].expand((rs) => ['123','456','789'].map((cs) => cross(rs, cs)) ));
 
-var units = dict(squares.map((s) => 
+final Map units = dict(squares.map((s) => 
     [s, unitlist.where((u) => u.contains(s)).toList()] ));
 
-var peers = dict(squares.map((s) => 
+final Map peers = dict(squares.map((s) => 
     [s, units[s].expand((u) => u).toSet()..removeAll([s])]));    
 
 /// Parse a Grid
@@ -95,25 +94,3 @@ Map search(Map values){
   var s2 = order(squares.where((s) => values[s].length > 1).toList(), on:(s) => values[s].length).first;
   return some(values[s2].split('').map((d) => search(assign(new Map.from(values), s2, d))));
 }
-
-solved(values){
-  unitsolved(unit) => unit.map((s) => values[s]).toSet().difference(digits.split('').toSet()).length == 0;
-  return values != null && all(unitlist.map((unit) => unitsolved(unit)));
-}
-
-void solveGrid(String name, String grid) {
-  if (name == null || name.length == 0)
-    name = "Board";
-  print("$name: $grid\n");
-  var watch = new Stopwatch();
-  watch.start();
-  var solution = search(parse_grid(grid));
-  display(solution);
-  print("solved: ${solved(solution)}, in ${watch.elapsedMilliseconds}ms\n");
-}
-
-void solveSudoku(String grid, [String name=""]) {
-  solveGrid(name, grid);
-}
-
-

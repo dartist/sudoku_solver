@@ -1,13 +1,13 @@
 #!/usr/bin/env dart
 
 import 'dart:io';
-import '../lib/sudoku.dart';
+import 'package:sudoku/sudoku.dart';
 
 void main(){
   var args = new Options().arguments;
-  if (args.length == 1){
-    solveSudoku(args[0]);
-  } else if (args.length == 2){
-    solveSudoku(args[1], args[0]);
+  if (args.length != 1) {
+    print("Missing one argument: the board as a single string");
+    return;
   }
+  display(solve(args[0]));
 }
