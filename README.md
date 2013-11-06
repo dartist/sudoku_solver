@@ -3,11 +3,11 @@ Sudoku Solver
 
 Port of [Solving Every Sudoku Puzzle](http://norvig.com/sudoku.html) by Peter Norvig in [Dart](http://www.dartlang.org/).
 
-  - [sudoku.dart](https://github.com/dartist/sudoku_solver/blob/master/benchmarks/sudoku.dart) in Dart
-  - [sudoku.py](https://github.com/dartist/sudoku_solver/blob/master/benchmarks/sudoku.py) in Python
-  - [sudoku.cs](https://github.com/dartist/sudoku_solver/blob/master/benchmarks/sudoku.cs) in C#
-  - [sudoku.rb](https://github.com/dartist/sudoku_solver/blob/master/benchmarks/sudoku.rb) in Ruby
-  - [sudoku.coffee](https://github.com/dartist/sudoku_solver/blob/master/benchmarks/sudoku.coffee) in CoffeeScript
+  - [sudoku.dart](https://github.com/dartist/sudoku_solver/blob/master/benchmark/sudoku.dart) in Dart
+  - [sudoku.py](https://github.com/dartist/sudoku_solver/blob/master/benchmark/sudoku.py) in Python
+  - [sudoku.cs](https://github.com/dartist/sudoku_solver/blob/master/benchmark/sudoku.cs) in C#
+  - [sudoku.rb](https://github.com/dartist/sudoku_solver/blob/master/benchmark/sudoku.rb) in Ruby
+  - [sudoku.coffee](https://github.com/dartist/sudoku_solver/blob/master/benchmark/sudoku.coffee) in CoffeeScript
   
 View above solutions [side-by-side in Python, Dart, C#, Ruby, CoffeeScript](https://gist.github.com/mythz/5723202). 
   
@@ -52,7 +52,7 @@ Add this to your package's pubspec.yaml file:
 
 ## Benchmarks
 
-Results from running [these stand-alone benchmarks](https://github.com/dartist/sudoku_solver/blob/master/benchmarks/) 
+Results from running [these stand-alone benchmarks](https://github.com/dartist/sudoku_solver/blob/master/benchmark/) 
 on a new 2013 high-end 27" iMac on OSX after a clean re-start. Results are shown in Microseconds (µs):
 
 
