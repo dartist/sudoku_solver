@@ -60,8 +60,8 @@ on a new 2013 high-end 27" iMac on OSX after a clean re-start. Results are shown
 
 <table>
 <tr><th></th><th>grid1</th><th>grid2</th><th>top95</th></tr>
-<tr><td>PyPy</td><td>1x</td><td>1x</td><td>1.03x</td></tr>
 <tr><td>Dart</td><td>1.55x</td><td>1.26x</td><td>1x</td></tr>
+<tr><td>PyPy</td><td>1x</td><td>1x</td><td>1.03x</td></tr>
 <tr><td>C# / Mono</td><td>2.68x</td><td>2.09x</td><td>1.96x</td></tr>
 <tr><td>C# / .NET *</td><td>3.33x</td><td>2.60x</td><td>2.31x</td></tr>
 <tr><td>Python</td><td>3.43x</td><td>2.58x</td><td>2.48x</td></tr>
@@ -71,6 +71,15 @@ on a new 2013 high-end 27" iMac on OSX after a clean re-start. Results are shown
 
 __* .NET running inside Parallels Windows 8.1 VM__
 
+### Dart
+
+    iMac:benchmark mythz$ dart --version
+    Dart VM version: 0.8.10.3_r29803 (Mon Nov  4 06:02:48 2013) on "macos_x64"
+
+    iMac:benchmark mythz$ dart sudoku.dart 
+    grid1(RunTime): 2125.3985122210415 us.
+    grid2(RunTime): 4188.284518828452 us.
+    top95(RunTime): 657000.0 us.
 
 ### PyPy
 
@@ -82,16 +91,6 @@ __* .NET running inside Parallels Windows 8.1 VM__
     grid1(RunTime): 1369 us.
     grid2(RunTime): 3323 us.
     top95(RunTime): 678333 us.
-
-### Dart
-
-    iMac:benchmark mythz$ dart --version
-    Dart VM version: 0.8.10.3_r29803 (Mon Nov  4 06:02:48 2013) on "macos_x64"
-
-    iMac:benchmark mythz$ dart sudoku.dart 
-    grid1(RunTime): 2125.3985122210415 us.
-    grid2(RunTime): 4188.284518828452 us.
-    top95(RunTime): 657000.0 us.
 
 ### C# / Mono
 
