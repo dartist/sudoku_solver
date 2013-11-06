@@ -60,16 +60,16 @@ on a new 2013 high-end 27" iMac on OSX after a clean re-start. Results are shown
 
 <table>
 <tr><th></th><th>grid1</th><th>grid2</th><th>top95</th></tr>
-<tr><td>PyPy</td><td>1x</td><td>1x</td><td>1x</td></tr>
-<tr><td>Dart</td><td>2.07x</td><td>1.57x</td><td>1.2x</td></tr>
-<tr><td>C# / Mono</td><td>2.68x</td><td>2.09x</td><td>1.9x</td></tr>
-<tr><td>C# / .NET *</td><td>3.33x</td><td>2.60x</td><td>2.24x</td></tr>
-<tr><td>Python</td><td>3.43x</td><td>2.58x</td><td>2.4x</td></tr>
-<tr><td>CoffeeScript</td><td>4.70x</td><td>33.74x</td><td>5.63x</td></tr>
-<tr><td>Ruby</td><td>5.23x</td><td>15.09x</td><td>194.51x</td></tr>
+<tr><td>PyPy</td><td>1x</td><td>1x</td><td>1.03x</td></tr>
+<tr><td>Dart</td><td>1.55x</td><td>1.26x</td><td>1x</td></tr>
+<tr><td>C# / Mono</td><td>2.68x</td><td>2.09x</td><td>1.96x</td></tr>
+<tr><td>C# / .NET *</td><td>3.33x</td><td>2.60x</td><td>2.31x</td></tr>
+<tr><td>Python</td><td>3.43x</td><td>2.58x</td><td>2.48x</td></tr>
+<tr><td>CoffeeScript</td><td>4.70x</td><td>33.74x</td><td>5.81x</td></tr>
+<tr><td>Ruby</td><td>5.23x</td><td>15.09x</td><td>200.83x</td></tr>
 </table>
 
-__* .NET running inside Paralells Windows 8.1 VM__
+__* .NET running inside Parallels Windows 8.1 VM__
 
 
 ### PyPy
@@ -86,12 +86,12 @@ __* .NET running inside Paralells Windows 8.1 VM__
 ### Dart
 
     iMac:benchmark mythz$ dart --version
-    Dart VM version: 0.8.7.0_r29341 (Mon Oct 28 01:56:47 2013) on "macos_ia32"
+    Dart VM version: 0.8.10.3_r29803 (Mon Nov  4 06:02:48 2013) on "macos_x64"
 
     iMac:benchmark mythz$ dart sudoku.dart 
-    grid1(RunTime): 2832.8611898016998 us.
-    grid2(RunTime): 5213.541666666667 us.
-    top95(RunTime): 810666.6666666666 us.
+    grid1(RunTime): 2125.3985122210415 us.
+    grid2(RunTime): 4188.284518828452 us.
+    top95(RunTime): 657000.0 us.
 
 ### C# / Mono
 
@@ -189,7 +189,7 @@ longer than the 2s run rate being sampled above. In addition to the performace r
     3 9 2 |8 6 7 |5 4 1 
     5 6 8 |1 4 9 |2 3 7 
 
-    solved: true, in 57ms
+    solved: true, in 64ms
 
 ### PyPy
 
